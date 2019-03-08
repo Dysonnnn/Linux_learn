@@ -300,3 +300,213 @@ or available locally via: info '(coreutils) mkdir invocation'
 alias cw='cd ~/catkin_ws' 
 alias cs='cd ~/catkin_ws/src' 
 alias cm='cd ~/catkin_ws && catkin_make' 
+
+
+
+
+---
+
+## ps
+[Linux ps命令](http://www.runoob.com/linux/linux-comm-ps.html)
+Linux ps命令用于显示当前进程 (process) 的状态。
+**语法**
+>ps [options] [--help]
+
+**参数：**
+```
+ps 的参数非常多, 在此仅列出几个常用的参数并大略介绍含义
+-A 列出所有的行程
+-w 显示加宽可以显示较多的资讯
+-au 显示较详细的资讯
+-aux 显示所有包含其他使用者的行程
+au(x) 输出格式 :
+USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
+USER: 行程拥有者
+PID: pid
+%CPU: 占用的 CPU 使用率
+%MEM: 占用的记忆体使用率
+VSZ: 占用的虚拟记忆体大小
+RSS: 占用的记忆体大小
+TTY: 终端的次要装置号码 (minor device number of tty)
+STAT: 该行程的状态:
+D: 不可中断的静止 (通悸□□缜b进行 I/O 动作)
+R: 正在执行中
+S: 静止状态
+T: 暂停执行
+Z: 不存在但暂时无法消除
+W: 没有足够的记忆体分页可分配
+<: 高优先序的行程
+N: 低优先序的行程
+L: 有记忆体分页分配并锁在记忆体内 (实时系统或捱A I/O)
+START: 行程开始时间
+TIME: 执行的时间
+COMMAND:所执行的指令
+```
+
+显示所有进程信息，连同命令行
+```bash
+# ps -ef //显示所有命令，连带命令行
+UID    PID PPID C STIME TTY     TIME CMD
+root     1   0 0 10:22 ?    00:00:02 /sbin/init
+root     2   0 0 10:22 ?    00:00:00 [kthreadd]
+root     3   2 0 10:22 ?    00:00:00 [migration/0]
+root     4   2 0 10:22 ?    00:00:00 [ksoftirqd/0]
+root     5   2 0 10:22 ?    00:00:00 [watchdog/0]
+root     6   2 0 10:22 ?    /usr/lib/NetworkManager
+……省略部分结果
+root   31302 2095 0 17:42 ?    00:00:00 sshd: root@pts/2 
+root   31374 31302 0 17:42 pts/2  00:00:00 -bash
+root   31400   1 0 17:46 ?    00:00:00 /usr/bin/python /usr/sbin/aptd
+root   31407 31374 0 17:48 pts/2  00:00:00 ps -ef
+```
+
+
+[Linux grep命令](http://www.runoob.com/linux/linux-comm-grep.html)   
+    Linux grep命令用于查找文件里符合条件的字符串。
+
+grep指令用于查找内容包含指定的范本样式的文件，如果发现某文件的内容符合所指定的范本样式，预设grep指令会把含有范本样式的那一列显示出来。若不指定任何文件名称，或是所给予的文件名为"-"，则grep指令会从标准输入设备读取数据。
+
+**语法**
+>grep [-abcEFGhHilLnqrsvVwxy][-A<显示列数>][-B<显示列数>][-C<显示列数>][-d<进行动作>][-e<范本样式>][-f<范本文件>][--help][范本样式][文件或目录...]
+
+**参数：**
+```
+-a 或 --text : 不要忽略二进制的数据。
+-A<显示行数> 或 --after-context=<显示行数> : 除了显示符合范本样式的那一列之外，并显示该行之后的内容。
+-b 或 --byte-offset : 在显示符合样式的那一行之前，标示出该行第一个字符的编号。
+-B<显示行数> 或 --before-context=<显示行数> : 除了显示符合样式的那一行之外，并显示该行之前的内容。
+-c 或 --count : 计算符合样式的列数。
+-C<显示行数> 或 --context=<显示行数>或-<显示行数> : 除了显示符合样式的那一行之外，并显示该行之前后的内容。
+-d <动作> 或 --directories=<动作> : 当指定要查找的是目录而非文件时，必须使用这项参数，否则grep指令将回报信息并停止动作。
+-e<范本样式> 或 --regexp=<范本样式> : 指定字符串做为查找文件内容的样式。
+-E 或 --extended-regexp : 将样式为延伸的普通表示法来使用。
+-f<规则文件> 或 --file=<规则文件> : 指定规则文件，其内容含有一个或多个规则样式，让grep查找符合规则条件的文件内容，格式为每行一个规则样式。
+-F 或 --fixed-regexp : 将样式视为固定字符串的列表。
+-G 或 --basic-regexp : 将样式视为普通的表示法来使用。
+-h 或 --no-filename : 在显示符合样式的那一行之前，不标示该行所属的文件名称。
+-H 或 --with-filename : 在显示符合样式的那一行之前，表示该行所属的文件名称。
+-i 或 --ignore-case : 忽略字符大小写的差别。
+-l 或 --file-with-matches : 列出文件内容符合指定的样式的文件名称。
+-L 或 --files-without-match : 列出文件内容不符合指定的样式的文件名称。
+-n 或 --line-number : 在显示符合样式的那一行之前，标示出该行的列数编号。
+-o 或 --only-matching : 只显示匹配PATTERN 部分。
+-q 或 --quiet或--silent : 不显示任何信息。
+-r 或 --recursive : 此参数的效果和指定"-d recurse"参数相同。
+-s 或 --no-messages : 不显示错误信息。
+-v 或 --revert-match : 显示不包含匹配文本的所有行。
+-V 或 --version : 显示版本信息。
+-w 或 --word-regexp : 只显示全字符合的列。
+-x --line-regexp : 只显示全列符合的列。
+-y : 此参数的效果和指定"-i"参数相同。
+```
+
+---
+
+[使用awk批量杀进程的命令](https://blog.csdn.net/hi_kevin/article/details/17024107)  
+    在做系统运维的过程中，有时候会碰到需要杀掉某一类进程的时候，如何批量杀掉这些进程，使用awk命令是很好的选择。
+
+```bash
+ps -ef|grep aaa|grep -v grep|awk  '{print "kill -9 " $2}' |sh
+```
+
+1. ps -ef|grep aaa|grep -v grep   
+
+从当前系统运行的进程的进程名中包含aaa关键字的进程, -v 是显示不包含匹配文本的所有行。
+
+1. 后面部分就是awk命令了，一般awk命令的格式为：awk ' pattern {action} '
+
+    print是打印，kill -9 是强制停止进程的命令， $2就是前面有ps -ef命令得出的结果的第二列上显示的内容。
+
+
+下面举一个简单的例子：
+```bash
+#ps -ef|grep boco|grep -v grep
+root  9884  9883  0 17:10:01 ?         0:00 sendmail -oem -oi -froot boco
+root  9883  9880  0 17:10:01 ?         0:00 /usr/bin/mail boco
+
+#ps -ef|grep boco|grep -v grep|awk '{print "kill -9 "$2}'
+kill -9 9884
+kill -9 9883
+```
+
+我们可以看出，ps -ef|grep boco|grep -v grep列出了当前主机中运行的进程中包含boco关键字的进程
+
+而ps -ef|grep boco|grep -v grep|awk '{print "kill -9 "$2}'则列出了要kill掉这些进程的命令，并将之打印在了屏幕上
+
+在ps -ef|grep boco|grep -v grep|awk '{print "kill -9 "$2}'后面加上|sh后，则执行这些命令，进而杀掉了这些进程。
+
+
+整合到shell脚本
+
+
+killall pppd 命令慎用。会导致无法重新拨号连接，解决方法：重新连接模块
+
+
+
+获取shell脚本内 shell命令 输出的内容
+直接输入命令就可以
+
+输出当前时间：
+```bash
+date +"%Y-%m-%d %H-%M-%S"
+```
+
+```bash
+#[一个较为复杂的变量传递实例](https://www.cnblogs.com/OliverQin/p/5865656.html)
+#!/bin/bash
+##In this Script we will use variables
+##Writen by 2018-06-22
+# 获取日期注意事项：date +%Y%m%d 这个字符串是被英文状态下的ESC下面那个键
+d1=`date +%H:%M:%S`  
+echo "The Script begin at $d1."
+echo "Now we will sleep 2s"
+sleep 2
+d2=`date +%H:%M:%S`
+echo "The Script end at $d2."
+```
+
+date +"%m-%d %H:%M:%S"
+
+
+[Shell 传递参数](http://www.runoob.com/linux/linux-shell-passing-arguments.html)
+
+我们可以在执行 Shell 脚本时，向脚本传递参数，脚本内获取参数的格式为：$n。n 代表一个数字，1 为执行脚本的第一个参数，2 为执行脚本的第二个参数，以此类推……
+
+**实例**
+以下实例我们向脚本传递三个参数，并分别输出，其中 $0 为执行的文件名：
+```bash
+#!/bin/bash
+# author:菜鸟教程
+# url:www.runoob.com
+
+echo "Shell 传递参数实例！";
+echo "执行的文件名：$0";
+echo "第一个参数为：$1";
+echo "第二个参数为：$2";
+echo "第三个参数为：$3";
+```
+
+为脚本设置可执行权限，并执行脚本，输出结果如下所示：
+```bash
+$ chmod +x test.sh 
+$ ./test.sh 1 2 3
+Shell 传递参数实例！
+执行的文件名：./test.sh
+第一个参数为：1
+第二个参数为：2
+第三个参数为：3
+```
+
+另外，还有几个特殊字符用来处理参数：
+```
+参数处理	说明
+$#	传递到脚本的参数个数
+$*	以一个单字符串显示所有向脚本传递的参数。
+如"$*"用「"」括起来的情况、以"$1 $2 … $n"的形式输出所有参数。
+$$	脚本运行的当前进程ID号
+$!	后台运行的最后一个进程的ID号
+$@	与$*相同，但是使用时加引号，并在引号中返回每个参数。
+如"$@"用「"」括起来的情况、以"$1" "$2" … "$n" 的形式输出所有参数。
+$-	显示Shell使用的当前选项，与set命令功能相同。
+$?	显示最后命令的退出状态。0表示没有错误，其他任何值表明有错误。
+```
