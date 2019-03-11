@@ -12,6 +12,7 @@
 
 提供了多种Shell程序可供用户选择 文件Shells中保存了Linux系统中可使用的Shell程序列表 
 └─[$] <> cat /etc/shells
+```bash
 # /etc/shells: valid login shells
 /bin/sh
 /bin/dash
@@ -19,6 +20,7 @@
 /bin/rbash
 /bin/zsh
 /usr/bin/zsh
+```
 
 - 用户默认Shell的设定 
 > - 用户使用的登录Shell保存在passwd文件的记录中 
@@ -39,7 +41,7 @@ Shell变量名可以包含数字，字母和下划线，变量名的 开头只�
 
 变量名中的字母是大小 写敏感的。为了与命令名相区别，一般建议采用大写 字母来表示Shell变量。 
 
-Shell变量的取值都是一个字符串，赋值采用：“变量名 =值”。注意“=”左右不能有空格！
+Shell变量的取值都是一个字符串，赋值采用：“变量名=值”。注意“=”左右不能有空格！
 
 Shell变量的引用：$变量名
 
@@ -56,18 +58,25 @@ $ DAY=“today is Sunday”
 //若变量值本身包含空格，则整个字符 串必须用双引号括起来 
 
 自定义变量的清除 
+```
 $ unset DAY 
+```
 
-显示所有本地定义的Shell 变量 
+显示所有本地定义的Shell 变量
+```
 $ set
-
+```
 
 环境变量定义用户的工作环境，用户可以在当前shell和任 意子shell中获得它们设置的信息。
 
 环境变量必须用export命令导出，使之能够用于全部的 Shell环境。 
+```
 $ exportDAY 
+```
 使用env命令查看环境变量 
+```
 env 
+```
 常用环境变量 USER PWD SHELL HOME PATHHOSTNAME 
 环境变量配置文件 /etc/profile       //所有用户登录都会先执行本文件 
 /etc/bashrc//被用户主目录下的.bashrc调用执行 
@@ -77,12 +86,13 @@ env
 
 ### 预定义变量
 变量名含义
+```
 $#      传递到脚本的参数的数量
 $*      以一个单字符串显示传递到脚本的所有参数的内容
 $?      表示命令执行后返回的状态，用于检查上一个命令的执行 是否正确;在Linux中，命令退出状态为0表示命令正确执行 ，任何非0值表示命令执行错误 $$表示当前进程的进程号 
 $!      表示后台运行的后一个进程号
 $0      表示当前执行的进程名
-
+```
 ### Bash的命令行补全功能
 - 命令补全功能 
 > 使用Tab键可在命令查找路径中查找匹配的命令，并进行命令拼写的 补全 
@@ -115,20 +125,18 @@ $ history -c
 
 
 ###  重定向操作
-- 输出重定向 
-/>  将命令的执行结果重定向输出到指定的文件中，命令进行 输出重定向后执行结果将不显示在屏幕上
-输出重定向
-
-/>> 将命令执行的结果重定向并追加到指定文件的末尾保存
-
-- 错误重定向
-2>      清空指定文件的内容，并保存标准错误输出的内容到指定 文件中
-2>>     向指定文件中追加命令的错误输出，而不覆盖文件中的原 有内容
+|操作|符号|说明|
+|---|---|---|
+| 输出重定向  |>  |将命令的执行结果重定向输出到指定的文件中，命令进行 输出重定向后执行结果将不显示在屏幕上|
+|输出重定向|>> |将命令执行的结果重定向并追加到指定文件的末尾保存|
+|错误重定向|2>|清空指定文件的内容，并保存标准错误输出的内容到指定 文件中|
+|错误重定向|2>>    | 向指定文件中追加命令的错误输出，而不覆盖文件中的原有内容|
 
 ### 输出重定向实例
 
 #### 将命令输出重定向到文件 
 将标准输入重定向到文件 
+```
 $ wc                //统计从键盘输入的信息，包含的行数、单词数和字符数 
 $ wc    </etc/passwd 
 将标准输出重定向到文件 
@@ -138,7 +146,7 @@ $ cmd   2  >   errfile
 Eg;lsmyfile        //假设当前路径下myfile目录不存在 输出结果: “ls: myfile：没有那个目录或文件” 使用错误输出重定向到文件errfile: 
 lsmyfile2   > errfile          将标准输出和错误输出重定向到文件 
 $ lsafilebfile  &>  errfile
-
+```
 ### 管道的使用
 管道操作符
  | 
@@ -189,15 +197,67 @@ echo $?  //回显结果，0-真，非零-假
 if then else语句 if语句测试条件，如果测试结果为真(0)，则执行if体中的某段语句： 
 如果为假(1)，则执行if体外的语句。
 
-```
-if [ 条件语句 条件语句1 ] ; then
+```bash
+if [ 条件语句 条件语句1 ] ; then  # 括号两端必须要有空格
     指令序列1 
-elif[  条件语句 条件语句2 ] ; then 
+elif[  条件语句 条件语句2 ] ; then  # 括号两端必须要有空格
     指令序列2 
 else
     指令序列3 3
 fi 
 ```
+
+整数比较：
+
+-eq	检测两个数是否相等，相等返回 true。	[ $a -eq $b ] 返回 false。  
+-ne	检测两个数是否不相等，不相等返回 true。	[ $a -ne $b ] 返回 true。  
+-gt	检测左边的数是否大于右边的，如果是，则返回 true。	[ $a -gt $b ] 返回 false。  
+-lt	检测左边的数是否小于右边的，如果是，则返回 true。	[ $a -lt $b ] 返回 true。  
+-ge	检测左边的数是否大于等于右边的，如果是，则返回 true。	[ $a -ge $b ] 返回 false。  
+-le	检测左边的数是否小于等于右边的，如果是，则返回 true。	[ $a -le $b ] 返回 true。  
+
+字符串运算符
+下表列出了常用的字符串运算符，假定变量 a 为 "abc"，变量 b 为 "efg"：
+
+运算符	说明	举例
+=	检测两个字符串是否相等，相等返回 true。	[ $a = $b ] 返回 false。  
+!=	检测两个字符串是否相等，不相等返回 true。	[ $a != $b ] 返回 true。  
+-z	检测字符串长度是否为0，为0返回 true。	[ -z $a ] 返回 false。  
+-n	检测字符串长度是否为0，不为0返回 true。	[ -n "$a" ] 返回 true。  
+$	检测字符串是否为空，不为空返回 true。	[ $a ] 返回 true。  
+
+---参考自 [Shell 基本运算符](http://www.runoob.com/linux/linux-shell-basic-operators.html)
+
+
+
+    双目运算符=~；它和==以及!=具有同样的优先级。如果使用了它，则其右边的字符串就被认为是一个扩展的正则表达式来匹配。如果字符串和模式匹配，则返回值是0，否则返回1。如果这个正则表达式有语法错误，则整个条件表达式的返回值是2。如果打开了shell的nocasematch 选项则匹配时不考虑字母的大小写。模式的任何部分都可以被引用以强制把其当作字符串来匹配。由正则表达式中括号里面的子模式匹配的字符串被保存在数组变量BASH_REMATCH 中。BASH_REMATCH 中下标为0的元素是字符串中与整个正则表达式匹配的部分。BASH_REMATCH 中下标为n的元素是字符串中与第n 个括号里面的子模式匹配的部分。
+参考自 [bash自带正则匹配功能-BASH_REMATCH介绍](http://bbs.chinaunix.net/thread-4125147-1-1.html)
+
+
+
+---
+
+getReturn.sh: line 16: syntax error near unexpected token `fi'
+getReturn.sh: line 16: `fi'
+
+????
+
+上面两个问题都是由于.sh文件的格式为dos格式。而linux只能执行格式为unix格式的脚本。因为在dos/window下按一次回车键实际上输入的是“回车（CR)”和“换行（LF）”，而Linux/unix下按一次回车键只输入“换行（LF）”，所以修改的sh文件在每行都会多了一个CR，所以Linux下运行时就会报错找不到命令。
+        我们可以查看该脚本文件的格式，方法是使用命令：vim nginx_check.sh进入编辑文件界面，如下图所示。
+
+直接输入":"，然后在":"之后输入"set ff"如下图所示
+回车即可看到脚本格式，如下图所示，可以看到当前脚本格式是dos。
+我们需要把格式改为unix，方法是输入":set ff=unix"，也可以输入":set fileformat=unix"如下图所示。
+
+
+--------------------- 
+作者：在京奋斗者 
+来源：CSDN 
+原文：https://blog.csdn.net/u012453843/article/details/69803244/ 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+
+
+---
 
 ### for循环 
 当变量可以在列表中取值时，执行下面的指令序列，循环替换变量 的值，直到列表中的值被替换完为止。
@@ -227,6 +287,15 @@ while 条件;do
 done
 
 ```
+
+**死循环**：
+```
+while :
+do
+    指令序列
+done
+```
+
 ### case语句 
 语法
 ```
@@ -249,9 +318,11 @@ esac
 
 - 函数调用：函数调用之前先定义，脚本中没有函数声明 。 
 - 函数导出：使用“.”运算符将建立的函数导入Shell环境 
-    >eg:  $ .sh_fun.sh      // 函数hello导入Shell 
-    >$set | grep hello      // 使用set查看hello函数 
-    >$hello                 //直接在命令行中调用并运行hello函数
+```
+eg:  $ .sh_fun.sh      // 函数hello导入Shell 
+$set | grep hello      // 使用set查看hello函数 
+$hello                 //直接在命令行中调用并运行hello函数
+```    
 
 
 
@@ -268,9 +339,8 @@ esac
 -   脚本语句
 
 
-
-
 ---
+
 
 ## mkdir --help
 ```bash
@@ -295,18 +365,21 @@ or available locally via: info '(coreutils) mkdir invocation'
 ```
 
 
-# ~/.bashr 文件配置
-# Set ROS alias command  快捷命令
+---
+
+##  ~/.bashr 文件配置
+### Set alias command  设置快捷命令
+```
 alias cw='cd ~/catkin_ws' 
 alias cs='cd ~/catkin_ws/src' 
 alias cm='cd ~/catkin_ws && catkin_make' 
-
+```
 
 
 
 ---
 
-## ps
+## ps 命令
 [Linux ps命令](http://www.runoob.com/linux/linux-comm-ps.html)
 Linux ps命令用于显示当前进程 (process) 的状态。
 **语法**
@@ -360,7 +433,8 @@ root   31400   1 0 17:46 ?    00:00:00 /usr/bin/python /usr/sbin/aptd
 root   31407 31374 0 17:48 pts/2  00:00:00 ps -ef
 ```
 
-
+---
+## grep命令
 [Linux grep命令](http://www.runoob.com/linux/linux-comm-grep.html)   
     Linux grep命令用于查找文件里符合条件的字符串。
 
@@ -402,7 +476,8 @@ grep指令用于查找内容包含指定的范本样式的文件，如果发现�
 
 ---
 
-[使用awk批量杀进程的命令](https://blog.csdn.net/hi_kevin/article/details/17024107)  
+## awk命令
+参考自 [使用awk批量杀进程的命令](https://blog.csdn.net/hi_kevin/article/details/17024107)  
     在做系统运维的过程中，有时候会碰到需要杀掉某一类进程的时候，如何批量杀掉这些进程，使用awk命令是很好的选择。
 
 ```bash
@@ -441,10 +516,14 @@ kill -9 9883
 
 killall pppd 命令慎用。会导致无法重新拨号连接，解决方法：重新连接模块
 
-
+---
 
 获取shell脚本内 shell命令 输出的内容
 直接输入命令就可以
+
+
+---
+## 获取时间
 
 输出当前时间：
 ```bash
@@ -468,6 +547,9 @@ echo "The Script end at $d2."
 date +"%m-%d %H:%M:%S"
 
 
+---
+
+## 传递参数
 [Shell 传递参数](http://www.runoob.com/linux/linux-shell-passing-arguments.html)
 
 我们可以在执行 Shell 脚本时，向脚本传递参数，脚本内获取参数的格式为：$n。n 代表一个数字，1 为执行脚本的第一个参数，2 为执行脚本的第二个参数，以此类推……
@@ -509,4 +591,93 @@ $@	与$*相同，但是使用时加引号，并在引号中返回每个参数。
 如"$@"用「"」括起来的情况、以"$1" "$2" … "$n" 的形式输出所有参数。
 $-	显示Shell使用的当前选项，与set命令功能相同。
 $?	显示最后命令的退出状态。0表示没有错误，其他任何值表明有错误。
+```
+https://www.jb51.net/article/56559.htm
+
+
+---
+
+## 获取命令的输出
+参考自 [shell 脚本中获取命令的输出](https://blog.csdn.net/haiqinma/article/details/53672368)
+
+这个主要介绍的方法是获取命令的输出内容，而不是命令执行成功与否的返回值。
+
+比较常用的一种方式就是， 匹配命令输出的内容中是否存在某些关键字，选择执行的不同动作。
+
+比较常用的一种方式就是采用反向单引号的方式 --  保存结果的变量名=`需要执行的linux命令`
+
+
+```bash
+##! set bash diraction
+# check_results=`rpm -qa | grep "zlib"`
+check_results=`ls | grep sh`
+echo "command(ls) results are: $check_results"
+# if [[ $check_results =~ "1.8." ]] 
+if [[ $check_results=~"getReturn.sh" ]]
+then
+	echo "sh file has already here . " # 前面的是tab键
+else
+	echo "This is no sh file" # 前面的是tab键
+fi
+```
+
+在使用``（2个反向单引号）的方式**获取执行结果**时需要保证单引号内的命令是可以**执行成功**的。
+
+使用  保存结果的变量名=`需要执行的linux命令` 这种方式来获取命令的输出时，注意的情况总结如下：
+
+1）保证反单引号内的命令执行时成功的，也就是所命令执行后$?的输出必须是0，否则获取不到命令的输出
+
+2）即便是命令的返回值是0，也需要保证结果是通过标准输出来输出的，而不是标准错误输出，否则需要重定向
+
+因此我们推荐使用  保存结果的变量名=`需要执行的linux命令 2>&1 `的方式来获取命令的执行结果。
+
+感兴趣的朋友可以试下第二个例子中改成  check_results=`iscsiadmm --version 2>&1`的结果。
+
+
+此外还有一种获取命令执行返回值的方式 变量名=$(需要执行的命令) 对于这种方式没有进行测试，所以不再此讨论。
+
+对于上面提到的获取命令执行输出的情况，和获取函数执行结果的方式并不同，请在使用中进行注意。
+--------------------- 
+作者：歪歪的酒壶 
+来源：CSDN 
+原文：https://blog.csdn.net/haiqinma/article/details/53672368 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+
+
+
+
+---
+
+多行注释：
+
+法一：
+```bash
+:<<!
+语句1
+语句2
+语句3
+语句4
+!
+
+```
+
+
+---
+
+[shell 整型变量自增（加1）的几种方法](https://blog.csdn.net/zhaojinjia/article/details/25652983)
+
+```
+#!/bin/sh
+
+
+a=1
+a=$(($a+1))
+a=$[$a+1]
+a=`expr $a + 1`
+let a++
+let a+=1
+
+((a++))
+
+echo $a
 ```
