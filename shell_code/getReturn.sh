@@ -9,7 +9,7 @@ echo "command(ls) results are: $check_results"
 # if [[ $check_results=~"getReturn.sh" ]]
 
 # if [[ $check_results=~"ttyUSB2" ]]
-if [[ $check_results=~"cannnot" ]];
+if [[ $check_results=~"cannnot" ]] ;
 then
 	echo "This is no ttyUSB2 file" # 前面的是tab键
 else

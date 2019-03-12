@@ -681,3 +681,12 @@ let a+=1
 
 echo $a
 ```
+
+
+
+---
+《linux命令行与shell脚本》
+
+14.4.2 使用getopt 命令 
+
+---
