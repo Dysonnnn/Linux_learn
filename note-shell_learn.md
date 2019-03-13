@@ -659,6 +659,13 @@ fi
 语句4
 !
 
+法2：
+#   echo 
+#   echo
+#   echo
+#   echo 
+#   echo
+
 ```
 
 
@@ -687,6 +694,88 @@ echo $a
 ---
 《linux命令行与shell脚本》
 
-14.4.2 使用getopt 命令 
+### 14.4.2 使用getopt 命令 
+
+下面是个getopt如何工作的简单例子。 
+```bash
+$ getopt ab:cd -a -b test1 -cd test2 test3  
+-a -b test1 -c -d -- test2 test3 
+$ 
+```
+optstring定义了四个有效选项字母：a、b、c和d。  
+冒号（:）被放在了字母b后面，因为b 选项需要一个参数值。  
+当getopt命令运行时，它会检查提供的参数列表（-a -b test1 -cd test2 test3），并基于提供的optstring进行解析。  
+注意，它会自动将-cd选项分成两个单独的选项，并插入双破折线来分隔行中的额外参数  
+
+
+如果指定了一个不在optstring中的选项，默认情况下，getopt命令会产生一条错误消息。
+```
+$ getopt ab:cd -a -b test1 -cde test2 test3 getopt: invalid option -- e  -a -b test1 -c -d -- test2 test3 $ 如果想忽略这条
+```
+错误消息，可以在命令后加-q选项。 
+```
+$ getopt -q ab:cd -a -b test1 -cde test2 test3  -a -b 'test1' -c -d -- 'test2' 'test3' $ 
+```
+
+2. 在脚本中使用getopt 
+set -- $(getopt -q ab:cd "$@") 
+
+```
+$ cat test18.sh 
+```
+
+```bash
+#!/bin/bash 
+# Extract command line options & values with getopt 
+# set -- $(getopt -q ab:cd "$@") 
+# 
+echo 
+while [ -n "$1" ] 
+do
+    case "$1" in    
+    -a) echo "Found the -a option" ;;
+    -b) param="$2"
+        echo "Found the -b option, with parameter value $param"
+        shift ;;
+    -c) echo "Found the -c option" ;;   
+    --) shift
+        break ;;
+    *) echo "$1 is not an option";;    
+    esac 
+    shift 
+done 
+# 
+count=1 
+for param in "$@" 
+do
+    echo "Parameter #$count: $param"    
+    count=$[ $count + 1 ] 
+    done 
+#
+```
+
+```bash
+$ ./test18.sh -a -b test1 -cd test2 test3 test4 
+Found the -a option 
+Found the -b option, with parameter value 'test1' 
+Found the -c option 
+Parameter #1: 'test2' 
+Parameter #2: 'test3' 
+Parameter #3: 'test4'
+$ 
+``` 
+
+现在看起来相当不错了。但是，在getopt命令中仍然隐藏着一个小问题。getopt命令并不擅长处理带空格和引号的参数值。它会将空格当作参数分隔符，而不是根 据双引号将二者当作一个参数。幸而还有另外一个办法能解决这个问题---使用更高级的 getopts 
+
+
+
+### 14.4.3 使用更高级的 getopts getopts命令（注意是复数）内建于bash shell。它跟近亲getopt看起来很像，但多了一些扩展功能
+
+与getopt不同，前者将命令行上选项和参数处理后只生成一个输出，而getopts命令能够 和已有的shell参数变量配合默契。 每次调用它时，它一次只处理命令行上检测到的一个参数。处理完所有的参数后，它会退出 并返回一个大于0的退出状态码。这让它非常适合用解析命令行所有参数的循环中。 
+
+getopts命令的格式如下：    
+*getopts optstring variable* 
+
+optstring值类似于getopt命令中的那个。有效的选项字母都会列在optstring中，如果 选项字母要求有个参数值，就加一个冒号。要去掉错误消息的话，可以在optstring之前加一个 冒号。getopts命令将当前参数保存在命令行中定义的variable中。 getopts命令会用到两个环境变量。如果选项需要跟一个参数值，OPTARG环境变量就会保 存这个值。OPTIND环境变量保存了参数列表中getopts正在处理的参数位置。这样你就能在处 理完选项之后继续处理其他命令行参数了
 
 ---
