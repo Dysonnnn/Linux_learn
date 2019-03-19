@@ -82,5 +82,10 @@ unity –reset-icons &disown
 
 ---
 
-右键没有终端？？、sudo apt install gnome-terminal
+右键没有终端？？？
 
+sudo apt install gnome-terminal
+
+没有gedit？？？
+
+sudo apt install gedit
