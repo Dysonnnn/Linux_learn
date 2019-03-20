@@ -89,3 +89,43 @@ sudo apt install gnome-terminal
 没有gedit？？？
 
 sudo apt install gedit
+
+
+
+
+
+----
+
+空间不够。，。
+
+vbox新增虚拟磁盘，记住磁盘号，例如 /dev/sdb
+
+格式化分区
+如果想将/dev/sdX3格式化成ext4
+```
+$ sudo mkfs.ext4 /dev/sdb
+```
+
+挂载分区
+将根分区 挂载 到/vdisk，例如：
+```
+$ sudo mkdir /vdisk
+$ sudo mount /dev/sdb /vdisk
+```
+
+参考：[Linux系统使用GPT分区表方案推荐](https://blog.csdn.net/rbpicsdn/article/details/86603345)
+
+
+自动挂载
+1. 修改fstab文件。在终端输入
+```bash
+sudo vim /etc/fstab。
+```
+2. 在文件中添加如下行
+
+/dev/sdb /disk2 ext4 defaults 0 1
+
+3. 保存退出。
+
+[【Linux】virtualbox下ubuntu虚拟机重新挂载一个硬盘](https://blog.csdn.net/heiheiya/article/details/80885719)
+
