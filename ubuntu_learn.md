@@ -129,3 +129,18 @@ sudo vim /etc/fstab。
 
 [【Linux】virtualbox下ubuntu虚拟机重新挂载一个硬盘](https://blog.csdn.net/heiheiya/article/details/80885719)
 
+
+
+
+
+
+
+----
+
+
+
+修改DNS
+
+通过/etc/network/interfaces，在它的最后增加一句：
+
+dns-nameservers 8.8.8.8     
