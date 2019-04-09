@@ -1,7 +1,6 @@
 
 **Ubuntu系统桌面任务栏和启动器全部消失**??????
 
-
 **解决办法：**
 
 Ctrl+Alt+F1 进入命令行，输入:
@@ -92,7 +91,12 @@ sudo apt install gedit
 
 
 
+直接重装桌面吧
+sudo apt-get install --reinstall ubuntu-desktop
 
+
+
+---
 
 ----
 
