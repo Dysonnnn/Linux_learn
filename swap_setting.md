@@ -21,15 +21,15 @@ Swap分区（也称交换分区）是硬盘上的一个区域，被指定为操�
 2.检查系统的交换信息
 
 在开始之前，我们可以检查系统是否已经有一些可用的交换空间，可能有多个交换文件或交换分区，但通常应该是足够的。我们可以通过如下的命令来查看系统是否有交换分区：
-```
+```bash
 $ sudo swapon --show
 ```
 如果没有任何结果或者没有任何显示，说明系统当前没有可用的交换空间。也可以使用free工具来验证当前确实没有可用的交换分区。
-```
+```bash
 $ free -h
 ```
 输出结果：
-```
+```bash
               total        used        free      shared  buff/cache   available
 Mem:           488M         36M        104M        652K        348M        426M
 Swap:            0B          0B          0B
@@ -41,11 +41,11 @@ Swap:            0B          0B          0B
 为swap分配空间的最常见方式是使用专门用于具体某个任务的单独分， 但是，改变分区方案并不是一定可行的，我们只是可以轻松地创建驻留在现有分区上的交换文件。
 
 在开始之前，我们应该通过输入以下命令来检查当前磁盘的使用情况：
-```
+```bash
 $ df -h
 ```
 输出结果：
-```
+```bash
 Filesystem      Size  Used Avail Use% Mounted on
 udev            238M     0  238M   0% /dev
 tmpfs            49M  624K   49M   2% /run
@@ -63,15 +63,15 @@ tmpfs            49M     0   49M   0% /run/user/1001
 4.创建swap文件
 
 现在我们知道了可用的硬盘空间，那我们就可以在文件系统中创建一个交换文件，我们将在我们的根（/）目录下创建一个名为swapfile的文件。创建交换文件最好的方法是使用fallocate命令，这个命令能立即创建一个预分配大小的文件。由于本示例中的服务器RAM的大小为512MB，因此我们将在本教程中创建一个1 GB大小的文件，并适当加以调整，以满足您自己的服务器的需求：
-```
+```bash
 $ sudo fallocate -l 1G /swapfile
 ```
 创建完成之后，我们可以通过这个命令来验证是否保留了正确的交换空间：
-```
+```bash
 $ ls -lh /swapfile
 ```
 显示结果：
-```
+```bash
 $ -rw-r--r-- 1 root root 1.0G Apr 25 11:14 /swapfile
 ```
 这就说明我们的文件已经创建了正确的空间大小。
@@ -83,50 +83,50 @@ $ -rw-r--r-- 1 root root 1.0G Apr 25 11:14 /swapfile
 首先，我们需要锁定文件的权限，以便只有拥有root权限的用户才能读取文件内容，这可以防止普通用户能够访问该文件，以免造成重大的安全隐患。
 
 锁定文件的root权限：
-```
+```bash
 $ sudo chmod 600 /swapfile
 ```
 验证权限：
-```
+```bash
 $ ls -lh /swapfile
 ```
 显示结果：
-```
+```bash
 -rw------- 1 root root 1.0G Apr 25 11:14 /swapfile
 ```
 可以看到，只有root用户启用了读写标志。
 
 接下来，我们可以通过以下命令将文件标记为交换空间
-```
+```bash
 $ sudo mkswap /swapfile
 ```
 显示结果：
-```
+```bash
 Setting up swapspace version 1, size = 1024 MiB (1073737728 bytes)
 no label, UUID=6e965805-2ab9-450f-aed6-577e74089dbf
 ```
 
 标记文件之后，我们可以启用该交换文件，让我们的系统开始使用它：
-```
+```bash
 $ sudo swapon /swapfile
 ```
 可以通过以下命令验证交换空间是否可用：
-```
+```bash
 $ sudo swapon --show
 ```
 显示结果：
-```
+```bash
 NAME      TYPE  SIZE USED PRIO
 /swapfile file 1024M   0B   -1
 ```
 
 这时，我们可以通过free再次查看我们的设置：
-```
+```bash
 $ free -h
 ```
 
 显示结果：
-```
+```bash
               total        used        free      shared  buff/cache   available
 Mem:           488M         37M         96M        652K        354M        425M
 Swap:          1.0G          0B        1.0G
@@ -141,12 +141,12 @@ Swap:          1.0G          0B        1.0G
 
 备份/etc/fstab文件以防出错：
 
-```
+```bash
 $ sudo cp /etc/fstab /etc/fstab.bak
 ```
 将swap文件信息添加到/etc/fstab文件的末尾：
 
-```
+```bash
 $ echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ```
 

@@ -148,3 +148,27 @@ sudo vim /etc/fstab。
 通过/etc/network/interfaces，在它的最后增加一句：
 
 dns-nameservers 8.8.8.8     
+
+
+
+
+
+### 20190924
+更新的时候，出现大量 Ign
+```bash
+sudo apt update 
+
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+```
+
+网上的解决方法：
+
+```bash
+sudo rm /var/lib/apt/lists/*
+sudo rm /var/lib/apt/lists/partial/*
+sudo apt-get update
+```
+然而，并没有什么用。还是一样的提示
+
+W:The repository 'http://archive.ubuntu.com/ubuntu xenial Release' does not have a Release file., W:Data from such a repository can't be authenticated and is therefore potentially dangerous to use., W:See apt-secure(8) manpage for repository creation and user configuration details., W:The repository 'http://archive.ubuntu.com/ubuntu xenial-updates Release' does not have a Release file., W:Data from such a repository can't be authenticated and is therefore potentially dangerous to use., W:See apt-secure(8) manpage for repository creation and user configuration details., W:The repository 'http://archive.ubuntu.com/ubuntu xenial-backports Release' does not have a Release file., W:Data from such a repository can't be authenticated and is therefore potentially dangerous to use., W:See apt-secure(8) manpage for repository creation and user configuration details., W:The repository 'http://archive.ubuntu.com/ubuntu xenial-security Release' does not have a Release file., W:Data from such a repository can't be authenticated and is therefore potentially dangerous to use., W:See apt-secure(8) manpage for repository creation and user configuration details., E:Failed to fetch http://archive.ubuntu.com/ubuntu/dists/xenial/restricted/source/Sources  SECURITY: URL redirect target contains control characters, rejecting. [IP: 91.189.88.24 80], E:Failed to fetch http://archive.ubuntu.com/ubuntu/dists/xenial-updates/restricted/source/Sources  SECURITY: URL redirect target contains control characters, rejecting. [IP: 91.189.88.24 80], E:Failed to fetch http://archive.ubuntu.com/ubuntu/dists/xenial-backports/main/source/Sources  SECURITY: URL redirect target contains control characters, rejecting. [IP: 91.189.88.24 80], E:Failed to fetch http://archive.ubuntu.com/ubuntu/dists/xenial-security/restricted/source/Sources  SECURITY: URL redirect target contains control characters, rejecting. [IP: 91.189.88.24 80], E:Some index files failed to download. They have been ignored, or old ones used instead.
