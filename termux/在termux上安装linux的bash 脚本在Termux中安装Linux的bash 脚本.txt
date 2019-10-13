@@ -1,0 +1,32 @@
+在termux上安装linux的bash 脚本在Termux中安装Linux的bash 脚本
+https://github.com/YadominJinta/atilo
+下载/下载
+pkg in wget 
+wget https://raw.githubusercontent.com/YadominJinta/atilo/master/atilo -O ~/atilo
+chmod +x ~/atilo
+用法/使用方法
+./atilo [option/选项] [parameter/参数]
+
+arch           Install/安装 archlinux
+cent           Install/安装 centos
+fedora         Install/安装 fedora
+alpine         Install/安装alpine
+aosc           Install/安装aosc
+ubuntu         Install/安装ubuntu
+debian         Install/安装debian
+-r             Deletee installed Linux/删除已安装的Linux
+注意
+1。
+由于问题termux-exec（现在非常有用但不稳定）。您可能会遇到以下问题。
+因为termux-exec（十分有用但是尚不稳定）的原因，你可能会遇到以下报错
+
+proot error: execve("/usr/bin/env"): No such file or directory
+…
+…
+fatal error: see `proot --help`.
+proot error: can't chmod '/data/data/com.termux/files/usr/tmp//proot-31860-8sDNj7': No such file or directory
+
+unset LD_PRELOAD 将修复它/能够修复它
+
+2。
+所有的下载链接都在中国

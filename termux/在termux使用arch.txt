@@ -1,0 +1,75 @@
+在termux使用arch
+
+
+百度百科：
+
+Arch Linux(或称Arch)是一种以轻量简洁为设计理念的Linux发行版。其开发团队秉承简洁、优雅、正确和代码最小化的设计宗旨。Arch Linux 项目受 CRUX 启发，由 Judd Vinet 于2002年启动。
+Arch Linux是起源于加拿大的一份致力于使用简单、系统轻量、软件更新速度快的GNU/Linux发行版。创始人Judd Vinet出于对Debian以及Red Hat的包管理器不满，以及受CRUX影响而创立。最初针对i686，但是如今对x86_64也支持良好，而且还派生出了针对ARM平台的Arch Linux ARM以及针对HURD内核的Arch Hurd（发展缓慢）。
+
+主要特点编辑
+1，软件更新速度快
+2，包管理简易高效
+功能
+示例
+查询pacman主功能用法
+pacman --help
+查询pacman子功能用法
+pacman -Q -h
+本地安装软件包
+pacman -U linux-3.5.4-1-i686.pkg.tar.xz
+源信息更新
+pacman -Sy
+软件随源升级
+pacman -Syu
+从源中查找软件
+pacman -Ss linux
+从源中下载软件
+pacman -Sw linux
+从源中安装软件
+pacman -S linux
+删除软件（包括该软件依赖但是未被其他软件依赖的包）
+pacman -R linux
+删除/var/cache/pacman/pkg/*中未安装包
+pacman -Sc
+删除/var/cache/pacman/pkg/*中所有包
+pacman -Scc
+本地查询所有已安装软件
+pacman -Q
+本地查询单个软件版本信息
+pacman -Q linux
+本地查看单个软件包内容
+pacman -Ql linux
+从源中查询软件组包含软件
+pacman -Sg gnome
+Arch Linux包管理器pacman基本用法
+3，保留类ports系统
+pacman适用于已编译包，它只定义一个软件包必须依赖包以提高用户对软件选择的自由度，但是，它对源码级别的定制度为零。一般来说pacman可以满足大部分用户需求，因为一般用户用不着编译源码，即使修改源码，其改动量也极小。从通用性来说，算不上一个包管理系统，因为它只适用于某个特定软件或者该软件临近版本。
+中文设置编辑
+~/.xinitrc
+export LC_CTYPE=zh_CN.UTF-8
+export XMODIFIERS=@im=fcitx
+eval `dbus-launch --sh-syntax --exit-with-session`
+exec fcitx &
+~/.Xdefaults
+XTerm*background: grey20
+XTerm*foreground: white
+XTerm*faceName: unifont
+XTerm*utf8Title: true
+若是~/.Xdefaults未加载，安装xorg-xrdb后手动加载
+
+
+
+
+
+###日常使用命令
+startarch 	开启arch 	
+
+
+
+
+###
+先更新
+然后加ArchLinuxcn源
+
+安装了啥？
+zsh vim 
