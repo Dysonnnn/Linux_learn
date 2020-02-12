@@ -41,7 +41,7 @@ if [ -s $file ]
 then
 	echo "文件不为空"
 else
-	echo "文件为空"、
+	echo "文件为空"
 fi
 
 if [ -e $file ]
