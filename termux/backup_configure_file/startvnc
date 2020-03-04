@@ -1,0 +1,12 @@
+#!/bin/bash -e
+export DISPLAY=:10  # 在10号屏幕上打开程序
+Xvnc --SecurityTypes=None $DISPLAY &  # 启动vnc
+sleep 1s  # 等待vnc启动
+openbox-session & # 打开窗口管理器
+xsetroot -solid gray # 把背景弄成灰色
+pypanel & # 打开pypanel
+
+#作者：Void_Caller
+#链接：https://www.jianshu.com/p/195fdb7adc41
+#來源：简书
+#简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
