@@ -11,7 +11,6 @@ vncsever
 ```
 输入两次密码
 
-
 关闭vnc服务
 ```sh
 vncserver -kill:1
