@@ -1,13 +1,12 @@
-Termux超级终端折腾记 - 基础之环境完善
-http://blog.spursgo.com/zheteng/Termuxzheteng.html
-人生程序
-一个爱马刺的程序员
-    
-首页 归档 分类 关于 友链 书单
-Termux超级终端折腾记 - 基础之环境完善
+# [Termux超级终端折腾记 - 基础之环境完善](http://blog.spursgo.com/zheteng/Termuxzheteng.html)
+
+- 人生程序,一个爱马刺的程序员
+
 发表于： 2017年9月26日 | 分类： 折腾 | 评论：0  | 阅读：6292 | 字数：617
 Termux超级终端折腾记
-1. Termux介绍
+
+## 1.Termux介绍
+
 termux是个非常强大的终端模拟器。
 官方网站
 酷安网下载地址
@@ -28,10 +27,13 @@ termux是个非常强大的终端模拟器。
 
 使用了frotz运行基于文本的游戏。
 
-2.搭配软件下载（非必需）
+## 2.搭配软件下载（非必需）
+
 JuiceSSH SSH连接增强，内置了一些软键盘十分强大
 QQ或者TIM（我想QQ大家应该都有吧！TIM就是简化版的QQ啦）
-3.基本操作
+
+## 3.基本操作
+
 开始的一些操作只能在Termux原始的终端进行，等SSH开启后再使用操作较为方便的JuiceSSH
 
 VOL↑ + Q  调出软键盘（很多人都不知道）
@@ -39,27 +41,36 @@ VOL↑ + W  上
 VOL↑ + S  下
 VOL↑ + A  左
 VOL↑ + D  右
-4.修改软件源
+
+## 4. 修改软件源
+
 使用金枪鱼镜像加速容易
 
+```bash
 cd ~
 echo "deb [arch=all,arm] http://mirrors.tuna.tsinghua.edu.cn/termux stable main" > ../usr/etc/apt/sources.list
 apt update
 apt install coreutils wget tar less -y
 apt install vim zsh zip clang openssl-tool openssh curl dnsutils git -y
+```
+
 个人比较倾向于不修改软件源，这里只是提供这么一个思路。
 
-5.启用ssh
+## 05. 启用ssh
+
 termux的sshd的默认监听8022端口，并且只支持密钥登陆
 
+```bash
 apt install openssl-tool openssh -y
 sshd
 netstat -ntlp |grep sshd
+```
+
 下面是我手机的结果：
 sshd的
 
 sshd的已经开始运行，并且监听8022端口
-6. JuiceSSH连接termux
+1. JuiceSSH连接termux
 （注：我的JuiceSSH是英文版的，界面可能看着比较别扭）
 
 下面介绍使用JuiceSSH登陆termux
@@ -139,13 +150,13 @@ http://blog.spursgo.com/zheteng/zshTheme.html
 
 ---
 
-Termux 高级终端安装使用配置教程
-https://www.sqlsec.com/2018/05/termux.html
+[Termux 高级终端安装使用配置教程](https://www.sqlsec.com/2018/05/termux.html)
 
-简介
+## 简介
+
 Termux是一个Android下一个高级的终端模拟器,开源且不需要root,支持apt管理软件包，十分方便安装软件包,完美支持Python,PHP,Ruby,Go,Nodejs,MySQL等。随着智能设备的普及和性能的不断提升，如今的手机、平板等的硬件标准已达到了初级桌面计算机的硬件标准,用心去打造完全可以把手机变成一个强大的工具.
 
-官网
+## 官网
 Github项目地址
 Google Play下载地址
 Google Play下载的版本比酷安要新,有能力建议下载Google PLay版本的.
@@ -214,6 +225,7 @@ Ctrl+Z -> 挂起（发送SIGTSTP到）当前进程
 基本命令
 Termux除了支持apt命令外,还在此基础上封装了pkg命令,pkg命令向下兼容apt命令.apt命令大家应该都比较熟悉了,这里直接简单的介绍下pkg命令:
 
+```bash
 pkg search <query>              搜索包
 pkg install <package>           安装包
 pkg uninstall <package>         卸载包
@@ -224,6 +236,8 @@ pkg list-all                    列出可供安装的所有包
 pkg list-installed              列出已经安装的包
 pkg shoe <package>              显示某个包的详细信息
 pkg files <package>             显示某个包的相关文件夹路径
+```
+
 目录环境结构
 ~ > echo $HOME
 /data/data/com.termux/files/home
@@ -1135,3 +1149,33 @@ BaiduPCS-Go
 项目地址
 
 可以完美在Termux上运行.
+
+
+
+
+----
+
+ssh链接termux
+电脑
+手机termux
+电脑
+```bash
+ssh-keygen -t rsa
+scp ~/.ssh/id_rsa.pub root@phone /sdcard/
+ssh app_128@phone -p 8022
+```
+
+手机termux
+```sh 
+apt updata
+apt install openssh
+sshd -p 8022
+ssh='/data/data/com.termux/files/home/.ssh'
+mkdir ${ssh}
+cat /sdcard/id_rsa.pub >> ${ssh}/authorized_keys
+chown -R app_128:app_128 ${ssh}
+chmod -R 700 ${ssh}
+```
+————————————————
+版权声明：本文为CSDN博主「zk仔」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/weixin_39532362/article/details/92235002
